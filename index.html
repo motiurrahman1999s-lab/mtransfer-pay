@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>M Transfer - Payment</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <!-- হেডার + লাইভ টাইম -->
+        <div class="header">
+            <div class="header-top">
+                <h1>💳 M Transfer</h1>
+                <div class="live-time" id="liveTime">🕐 ০০:০০</div>
+            </div>
+            <p>অর্ডার আইডি: <strong id="orderIdDisplay">908639178490178233</strong></p>
+        </div>
+
+        <!-- চলমান টেক্সট (ম্যারুকি) -->
+        <div class="marquee-container">
+            <div class="marquee-text">
+                ⚠️ শুধুমাত্র ক্যাশআউট গ্রহণ করা হয় &nbsp;|&nbsp; ⚠️ শুধুমাত্র ক্যাশআউট গ্রহণ করা হয় &nbsp;|&nbsp; ⚠️ শুধুমাত্র ক্যাশআউট গ্রহণ করা হয়
+            </div>
+        </div>
+
+        <!-- অর্ডার সামারি -->
+        <div class="order-summary">
+            <h2>পরিশোধের পরিমাণ (লিখুন)</h2>
+            <div class="amount-input-group">
+                <span class="currency">৳</span>
+                <input type="number" id="amountInput" value="1890.00" step="0.01" min="1" />
+                <button id="setDefaultAmount" class="default-btn">ডিফল্ট</button>
+            </div>
+        </div>
+
+        <!-- পেমেন্ট চ্যানেল (লোগো সহ) -->
+        <div class="payment-channels">
+            <h3>পেমেন্ট চ্যানেল</h3>
+            <div class="channel-tabs">
+                <button class="tab active" data-channel="bkash">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/BKash_Logo.svg/256px-BKash_Logo.svg.png" alt="বিকাশ" />
+                    বিকাশ
+                </button>
+                <button class="tab" data-channel="nagad">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Nagad_Logo.svg/256px-Nagad_Logo.svg.png" alt="নগদ" />
+                    নগদ
+                </button>
+            </div>
+        </div>
+
+        <!-- এজেন্ট নাম্বার (শুধু নাম্বার + কপি) -->
+        <div class="step" id="step1">
+            <h4>📌 এজেন্ট নাম্বার কপি করুন</h4>
+            <div class="wallet-box" id="bkash-wallet">
+                <p><strong>বিকাশ এজেন্ট:</strong></p>
+                <div class="wallet-number">
+                    <span id="bkash-number">01342672280</span>
+                    <button class="copy-btn" data-target="bkash-number">📋 copy</button>
+                </div>
+            </div>
+            <div class="wallet-box" id="nagad-wallet" style="display:none;">
+                <p><strong>নগদ এজেন্ট:</strong></p>
+                <div class="wallet-number">
+                    <span id="nagad-number">01604332000</span>
+                    <button class="copy-btn" data-target="nagad-number">📋 copy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TrxID সাবমিট -->
+        <div class="step" id="step2">
+            <h4>📌 TrxID লিখুন ও সাবমিট করুন</h4>
+            <form id="payment-form">
+                <div class="form-group">
+                    <label for="trxid">ক্যাশআউটের TrxID নাম্বার:</label>
+                    <input type="text" id="trxid" placeholder="যেমন: 8A7B9C2D1E" required />
+                </div>
+                <div class="form-group">
+                    <label for="payment_method">পেমেন্ট মেথড:</label>
+                    <select id="payment_method" required>
+                        <option value="bkash">বিকাশ</option>
+                        <option value="nagad">নগদ</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">✅ পেমেন্ট কনফার্ম করুন</button>
+            </form>
+            <div id="resultMessage" style="margin-top:15px; display:none;"></div>
+        </div>
+
+        <!-- সতর্কতা -->
+        <div class="warning">
+            <p>⚠️ <strong>গুরুত্বপূর্ণ:</strong> টাকা পাঠানোর আগে অবশ্যই কল বা হোয়াটসঅ্যাপ এ মেসেজ করে কনফার্ম করে নিবেন।</p>
+        </div>
+
+        <!-- ফুটার - হেল্পলাইন -->
+        <div class="footer-help">
+            <div class="help-line">
+                <span class="help-label">📞 হেল্পলাইন:</span>
+                <a href="https://wa.me/8801777577425" target="_blank" class="whatsapp-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/256px-WhatsApp.svg.png" alt="WhatsApp" />
+                    01777577425
+                </a>
+                <span class="help-divider">|</span>
+                <a href="tel:01777577425" class="call-link">📱 কল করুন</a>
+            </div>
+            <p class="help-note">সাপোর্ট সময়: সকাল ৮ টা - রাত ১০টা</p>
+        </div>
+
+        <div class="timestamp">
+            <p>🕐 শেষ আপডেট: <span id="currentTime"></span></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

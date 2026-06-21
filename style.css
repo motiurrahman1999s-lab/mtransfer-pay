@@ -1,0 +1,451 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(145deg, #0f0c29, #302b63, #24243e);
+    background-attachment: fixed;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 32px;
+    padding: 30px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+    animation: fadeUp 0.6s ease-out;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* হেডার + লাইভ টাইম */
+.header {
+    text-align: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+.header-top h1 {
+    font-size: 26px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.live-time {
+    color: #ffd700;
+    font-size: 14px;
+    font-weight: 600;
+    background: rgba(255, 215, 0, 0.15);
+    padding: 4px 12px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+.header p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+.header p strong { color: #fff; }
+
+/* চলমান টেক্সট (ম্যারুকি) */
+.marquee-container {
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 12px;
+    padding: 8px 0;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    overflow: hidden;
+}
+.marquee-text {
+    display: inline-block;
+    white-space: nowrap;
+    animation: marquee 12s linear infinite;
+    color: #ffd700;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 0 20px;
+}
+@keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* অর্ডার সামারি */
+.order-summary {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    padding: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.order-summary h2 {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+.amount-input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.currency {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffd700;
+}
+#amountInput {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    padding: 10px 14px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+    width: 150px;
+    text-align: center;
+    transition: all 0.3s;
+}
+#amountInput:focus {
+    outline: none;
+    border-color: #ffd700;
+    background: rgba(255, 255, 255, 0.15);
+}
+#amountInput::-webkit-inner-spin-button { -webkit-appearance: none; }
+.default-btn {
+    background: rgba(255, 215, 0, 0.15);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: #ffd700;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.default-btn:hover {
+    background: rgba(255, 215, 0, 0.25);
+    transform: scale(1.02);
+}
+
+/* পেমেন্ট চ্যানেল */
+.payment-channels { margin-bottom: 20px; }
+.payment-channels h3 {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+.channel-tabs {
+    display: flex;
+    gap: 12px;
+}
+.tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.tab img {
+    height: 24px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0.8);
+    transition: filter 0.3s;
+}
+.tab.active {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: #ffd700;
+    color: #fff;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.15);
+}
+.tab.active img { filter: brightness(1); }
+.tab:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+/* স্টেপ */
+.step {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.step h4 {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+/* ওয়ালেট বক্স (কল ইনফো বাদ) */
+.wallet-box {
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    margin-bottom: 12px;
+    border-left: 4px solid #ffd700;
+    transition: all 0.3s;
+}
+.wallet-box:hover { background: rgba(255, 255, 255, 0.09); }
+.wallet-box p {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+.wallet-number {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px 12px;
+    border-radius: 10px;
+    margin: 6px 0;
+}
+.wallet-number span {
+    flex: 1;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+    word-break: break-all;
+}
+.copy-btn {
+    background: linear-gradient(135deg, #ffd700, #f7971e);
+    border: none;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #1a1a2e;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+.copy-btn:hover {
+    transform: scale(1.04);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+.copy-btn.copied {
+    background: #00b894;
+    color: #fff;
+}
+
+/* ফর্ম */
+.form-group { margin-bottom: 14px; }
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    font-size: 14px;
+}
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    font-size: 16px;
+    color: #fff;
+    transition: all 0.3s;
+}
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #ffd700;
+    background: rgba(255, 255, 255, 0.1);
+}
+.form-group select option {
+    background: #1a1a2e;
+    color: #fff;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #00b894, #00cec9);
+    border: none;
+    border-radius: 14px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 4px;
+    box-shadow: 0 4px 20px rgba(0, 206, 201, 0.25);
+}
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 206, 201, 0.35);
+}
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#resultMessage {
+    padding: 14px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 600;
+    margin-top: 14px;
+}
+.success {
+    background: rgba(0, 184, 148, 0.2);
+    color: #55efc4;
+    border: 1px solid rgba(0, 184, 148, 0.3);
+}
+.error {
+    background: rgba(255, 107, 107, 0.2);
+    color: #ff7675;
+    border: 1px solid rgba(255, 107, 107, 0.3);
+}
+.pending {
+    background: rgba(255, 215, 0, 0.15);
+    color: #ffd700;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.warning {
+    background: rgba(255, 215, 0, 0.08);
+    border-left: 4px solid #ffd700;
+    padding: 14px;
+    border-radius: 10px;
+    margin-top: 16px;
+}
+.warning p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    line-height: 1.6;
+}
+.warning strong { color: #ffd700; }
+
+/* ফুটার - হেল্পলাইন */
+.footer-help {
+    margin-top: 25px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+}
+.help-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 15px;
+}
+.help-label {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+    font-size: 14px;
+}
+.whatsapp-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #25D366;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 5px 14px;
+    background: rgba(37, 211, 102, 0.12);
+    border-radius: 30px;
+    transition: all 0.3s;
+    border: 1px solid rgba(37, 211, 102, 0.2);
+}
+.whatsapp-link img {
+    height: 18px;
+    width: auto;
+}
+.whatsapp-link:hover {
+    background: rgba(37, 211, 102, 0.2);
+    transform: scale(1.03);
+}
+.call-link {
+    color: #ffd700;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 5px 14px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 30px;
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    transition: all 0.3s;
+}
+.call-link:hover {
+    background: rgba(255, 215, 0, 0.2);
+    transform: scale(1.03);
+}
+.help-divider {
+    color: rgba(255, 255, 255, 0.2);
+}
+.help-note {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.timestamp {
+    text-align: center;
+    margin-top: 16px;
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 480px) {
+    .container { padding: 18px; }
+    #amountInput { width: 120px; font-size: 20px; }
+    .tab { font-size: 13px; padding: 10px 6px; }
+    .tab img { height: 20px; }
+    .wallet-number { flex-wrap: wrap; justify-content: center; }
+    .wallet-number span { font-size: 16px; text-align: center; width: 100%; }
+    .copy-btn { width: 100%; text-align: center; }
+    .header-top h1 { font-size: 22px; }
+    .live-time { font-size: 12px; padding: 2px 10px; }
+    .help-line { flex-direction: column; gap: 5px; }
+}

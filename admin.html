@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>অ্যাডমিন - কনফার্মেশন</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        .admin-container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .admin-container h2 {
+            color: #ffd700;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .pending-item {
+            background: rgba(255,255,255,0.08);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .pending-item .info {
+            color: #fff;
+            font-size: 14px;
+        }
+        .pending-item .info strong {
+            color: #ffd700;
+        }
+        .btn-confirm {
+            background: #00b894;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-confirm:hover { background: #00a381; }
+        .btn-reject {
+            background: #ff6b6b;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        .btn-reject:hover { background: #e55a5a; }
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .status-pending { background: #fdcb6e; color: #2d3436; }
+        #noPending { color: rgba(255,255,255,0.6); text-align: center; padding: 30px; }
+        .admin-lock {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            background: rgba(255,215,0,0.1);
+            padding: 5px 15px;
+            border-radius: 30px;
+            color: #ffd700;
+            font-size: 12px;
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-lock">🔒 অ্যাডমিন প্যানেল</div>
+    <div class="admin-container">
+        <h2>🔐 পেমেন্ট কনফার্মেশন</h2>
+        <p style="color: rgba(255,255,255,0.6); text-align: center; margin-bottom: 20px;">
+            নিচে পেন্ডিং TrxID গুলো দেখুন। আপনার অ্যাপ চেক করে কনফার্ম/রিজেক্ট করুন।
+        </p>
+        <div id="pendingList">
+            <div id="noPending">🎉 কোনো পেন্ডিং TrxID নেই</div>
+        </div>
+    </div>
+    <script>
+        let pendingTransactions = [];
+
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'pendingTransactions') loadPending();
+        });
+
+        function loadPending() {
+            const stored = localStorage.getItem('pendingTransactions');
+            pendingTransactions = stored ? JSON.parse(stored) : [];
+            renderPending();
+        }
+
+        function renderPending() {
+            const container = document.getElementById('pendingList');
+            if (pendingTransactions.length === 0) {
+                container.innerHTML = `<div id="noPending">🎉 কোনো পেন্ডিং TrxID নেই</div>`;
+                return;
+            }
+            let html = '';
+            pendingTransactions.forEach((item, index) => {
+                html += `
+                    <div class="pending-item">
+                        <div class="info">
+                            <strong>TrxID:</strong> ${item.trxid}<br>
+                            <strong>টাকা:</strong> ৳ ${item.amount}<br>
+                            <strong>মেথড:</strong> ${item.method === 'bkash' ? 'বিকাশ' : 'নগদ'}
+                        </div>
+                        <div>
+                            <span class="status-badge status-pending">⏳ পেন্ডিং</span>
+                            <button class="btn-confirm" onclick="confirmPayment(${index})">✅ কনফার্ম</button>
+                            <button class="btn-reject" onclick="rejectPayment(${index})">❌ রিজেক্ট</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        window.confirmPayment = function(index) {
+            if (confirm(`"${pendingTransactions[index].trxid}" কনফার্ম করবেন?`)) {
+                pendingTransactions.splice(index, 1);
+                saveAndReload();
+                alert('✅ পেমেন্ট সফল!');
+            }
+        };
+
+        window.rejectPayment = function(index) {
+            if (confirm(`"${pendingTransactions[index].trxid}" রিজেক্ট করবেন?`)) {
+                pendingTransactions.splice(index, 1);
+                saveAndReload();
+                alert('❌ পেমেন্ট রিজেক্ট!');
+            }
+        };
+
+        function saveAndReload() {
+            localStorage.setItem('pendingTransactions', JSON.stringify(pendingTransactions));
+            window.dispatchEvent(new Event('storage'));
+            loadPending();
+        }
+
+        loadPending();
+        setInterval(loadPending, 5000);
+    </script>
+</body>
+</html>
